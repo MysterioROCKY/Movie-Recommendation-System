@@ -48,8 +48,10 @@ class MovieRecommender:
         self.movies = movies[["movie_id", "title", "tags"]].copy()
         self.movies["tags"] = self.movies["tags"].apply(lambda values: " ".join(values)).str.lower().apply(stem)
         vectorizer = CountVectorizer(max_features=5000, stop_words="english")
-        vectors = vectorizer.fit_transform(self.movies["tags"]).toarray()
-        self.similarity = cosine_similarity(vectors)
+        # Keep the vectors sparse. Building the complete 4,803 x 4,803 matrix
+        # consumes too much memory on small cloud instances. Cosine similarity is
+        # calculated against this same vector space when a title is requested.
+        self.vectors = vectorizer.fit_transform(self.movies["tags"])
 
         display["genres"] = display["genres"].apply(convert)
         display["year"] = display["release_date"].fillna("").str[:4]
@@ -70,8 +72,10 @@ class MovieRecommender:
         if not title:
             return None
         movie_index = self.movies[self.movies["title"] == title].index[0]
-        # Same top-five sorted cosine-similarity ranking as the notebook.
-        movie_list = sorted(enumerate(self.similarity[movie_index]), reverse=True, key=lambda item: item[1])[1:6]
+        # Same cosine-similarity ranking as the notebook, calculated for one
+        # selected film at a time instead of storing every movie-to-movie pair.
+        distances = cosine_similarity(self.vectors[movie_index], self.vectors).flatten()
+        movie_list = sorted(enumerate(distances), reverse=True, key=lambda item: item[1])[1:6]
         recommendations = []
         for index, score in movie_list:
             movie = self.movies.iloc[index]

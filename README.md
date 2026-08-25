@@ -40,7 +40,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Open `http://127.0.0.1:5000` in a browser. The first startup may take a few seconds while the model builds its similarity matrix.
+Open `http://127.0.0.1:5000` in a browser. The first startup may take a few seconds while the model prepares the movie feature vectors.
 
 ## Poster images
 
