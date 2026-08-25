@@ -1,16 +1,35 @@
-# CineMatch — Movie Recommendation System
+# CineMatch
 
-A polished Flask web app for this repository's content-based movie recommender. Search a title and receive its five closest matches from a catalogue of 4,800+ films.
+A content-based movie recommendation web application that discovers films with similar stories, genres, casts, directors, and keywords.
 
-The recommendation logic is preserved from `movie_recommender_system.ipynb`: overview, genres, keywords, top-three cast members and director form movie tags; `CountVectorizer(max_features=5000, stop_words="english")` creates vectors, and cosine similarity returns the top five results.
+Enter a movie title and CineMatch returns the five closest matches from the TMDB 5000 Movie Dataset.
 
 ## Features
 
-- Responsive dark cinema-themed design
-- Movie-title autocomplete, loading and not-found states
-- Real-time top-five recommendations and similarity scores
-- Movie years, genres and ratings from the TMDB dataset
-- Optional live TMDB posters, with the API key stored server-side
+- Cinematic, responsive Flask interface
+- Movie title autocomplete
+- Top-five content-based recommendations with match scores
+- Movie release year, TMDB rating, and genres
+- Optional TMDB poster integration
+- Loading and invalid-title states
+
+## How it works
+
+The recommendation engine combines each film's overview, genres, keywords, top three cast members, and director into a single set of tags.
+
+1. `CountVectorizer` converts those tags into numerical feature vectors.
+2. Cosine similarity measures how closely each movie relates to the selected title.
+3. The five highest-scoring movies are returned as recommendations.
+
+## Tech stack
+
+- Python
+- Flask
+- Pandas
+- Scikit-learn
+- NLTK
+- HTML, CSS, and JavaScript
+- TMDB API (optional poster images)
 
 ## Run locally
 
@@ -21,23 +40,30 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Open `http://127.0.0.1:5000`. Initial startup builds the similarity matrix from the two CSV files, so it takes a few seconds.
+Open `http://127.0.0.1:5000` in a browser. The first startup may take a few seconds while the model builds its similarity matrix.
 
-To show live posters, create a free TMDB API key, set `TMDB_API_KEY` in your environment, and never commit that key. The app works without it using designed poster placeholders.
+## Poster images
 
-## Deploy on Render
+The app works without a TMDB key and displays poster placeholders. To enable TMDB posters, set a TMDB v3 API key before starting the application:
 
-1. Push these changes to GitHub.
-2. In [Render](https://render.com), choose **New → Blueprint**, then select this repository. It will use `render.yaml`.
-3. Optionally add the secret `TMDB_API_KEY` environment variable in Render.
-4. Deploy. Use the resulting public URL as your resume’s **Live Demo** link.
+```powershell
+$env:TMDB_API_KEY="your_tmdb_v3_api_key"
+python app.py
+```
 
-For a manually-created service, use `pip install -r requirements.txt` as the build command and `gunicorn app:app` as the start command.
+Keep API keys private. Do not commit them to the repository.
 
-## Resume entry
+## Project structure
 
-**CineMatch — Content-Based Movie Recommendation System** | Python, Flask, Scikit-learn, Pandas, JavaScript
+```text
+app.py                  Flask routes and API endpoints
+model.py                Content-based recommendation engine
+templates/index.html    Application page
+static/                 Styling and browser-side behaviour
+tmdb_5000_movies.csv    Movie metadata dataset
+tmdb_5000_credits.csv   Cast and crew dataset
+```
 
-Built and deployed a responsive movie-discovery web app using NLP feature engineering and cosine similarity across 4,800+ TMDB titles; delivered real-time top-five recommendations with autocomplete and optional TMDB poster integration.
+## Dataset
 
-Include both **Live Demo** and **GitHub** links beside this project.
+This project uses the TMDB 5000 Movie Dataset. TMDB API data is used only for poster images when an API key is configured.
