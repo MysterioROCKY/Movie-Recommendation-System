@@ -4,6 +4,12 @@ A content-based movie recommendation web application that discovers films with s
 
 Enter a movie title and CineMatch returns the five closest matches from the TMDB 5000 Movie Dataset.
 
+## Live Demo
+
+**Live Application:** https://cinematch-movie-recommender-o3ql.onrender.com
+
+> **Note:** The application is deployed on Render's free tier. If it has been inactive for some time, the service may take a short time to start when you first open the link.
+
 ## Features
 
 - Cinematic, responsive Flask interface
