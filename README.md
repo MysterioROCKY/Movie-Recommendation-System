@@ -44,15 +44,12 @@ Open `http://127.0.0.1:5000` in a browser. The first startup may take a few seco
 
 ## Poster images
 
-The app works without a TMDB key and displays poster placeholders. To enable TMDB posters, set a TMDB v3 API key before starting the application:
+The app works without a TMDB key and displays poster placeholders. To enable TMDB posters, I have set a TMDB v3 API key before starting the application:
 
 ```powershell
 $env:TMDB_API_KEY="your_tmdb_v3_api_key"
 python app.py
 ```
-
-Keep API keys private. Do not commit them to the repository.
-
 ## Project structure
 
 ```text
