@@ -8,7 +8,7 @@ Enter a movie title and CineMatch returns the five closest matches from the TMDB
 
 **Live Application:** https://cinematch-movie-recommender-o3ql.onrender.com
 
-> **Note:** The application is deployed on Render's free tier. If it has been inactive for some time, the service may take a short time to start when you first open the link.
+**Note:** The application is deployed on Render's free tier. If it has been inactive for some time, the service may take a short time to start when you first open the link.
 
 ## Features
 
