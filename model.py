@@ -59,13 +59,12 @@ class MovieRecommender:
         self.titles = self.movies["title"].drop_duplicates().tolist()
         self.title_lookup = {title.casefold(): title for title in self.titles}
 
-    def suggestions(self, query, limit=8):
+    def suggestions(self, query, limit=20):
+        """Return a manageable list of case-insensitive title-prefix matches."""
         query = query.strip().casefold()
         if not query:
             return []
-        first = [title for title in self.titles if title.casefold().startswith(query)]
-        rest = [title for title in self.titles if query in title.casefold() and title not in first]
-        return (first + rest)[:limit]
+        return [title for title in self.titles if title.casefold().startswith(query)][:limit]
 
     def recommend(self, title):
         title = self.title_lookup.get(title.strip().casefold())
